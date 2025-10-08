@@ -1,0 +1,12 @@
+python extend_pix2gestalt_pipeline.py \
+  --mode sanity \
+  --log-level ERROR \
+  --coco test_data/coco_amodal_fb_val_v2_classified_with_source_mask.json \
+  --images-dir /home/projects/u7707452/data/coco/amodal_val_2024_fb_v2 \
+  --ckpt ./ckpt/epoch=000005.ckpt \
+  --config ./configs/sd-finetune-pix2gestalt-c_concat-256.yaml \
+  --device-idx 0 \
+  --image-ids 5-7,9-14,16,22,26,29,37 \
+  --out-dir ./step200 \
+  --ddim-steps 200 \
+  --guidance-scale 5.0
