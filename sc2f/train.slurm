@@ -22,7 +22,6 @@ srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/
         export RANK=$SLURM_PROCID
         export WORLD_SIZE=$SLURM_NTASKS
         export LOCAL_RANK=$SLURM_LOCALID
-        export CUDA_VISIBLE_DEVICES=$SLURM_LOCALID   # <- each rank sees exactly one GPU (index 0)
         export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
         echo "rank=$RANK local_rank=$LOCAL_RANK CVD=$CUDA_VISIBLE_DEVICES"
         cd /home/remote/u7707452/EXAFace/sc2f
