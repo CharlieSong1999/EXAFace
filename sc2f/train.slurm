@@ -14,7 +14,7 @@ nvidia-smi
 echo "--- Pytorch Training ---" 
 srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/containers/conda/conda-nvidia-22.04-latest.sif \
      bash -lc '
-        conda init bash
+        conda init
         source /home/remote/u7707452/.bashrc
         export RANK=$SLURM_PROCID
         export WORLD_SIZE=$SLURM_NTASKS
