@@ -27,7 +27,7 @@ srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/
         cd /home/remote/u7707452/EXAFace/sc2f
         conda activate /home/projects/u7707452/test_exaface 
         echo "Rank env: SLURM_PROCID=$SLURM_PROCID SLURM_LOCALID=$SLURM_LOCALID CWD=$(pwd)"
-        python train.py \
+        python -m torch.distributed.launch train.py \
             --cuda -dist --num_gpu 2 \
             -d coco_fb_diff \
             --root /home/projects/compVisionDatasets \
