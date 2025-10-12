@@ -6,7 +6,8 @@
 #SBATCH --mem=48gb # Job memory request 
 #SBATCH --time=120:00:00 # Time limit hrs:min:sec 
 #SBATCH --partition=gpu
-#SBATCH --gres=gpu:3090:2
+#SBATCH --gres=gpu:2
+#SBATCH --exclude=mlcv[1-3]
 #SBATCH --output=/home/remote/u7707452/EXAFace/sc2f/slog/yoloh-attn-fine-tune-2enc-2dec-all-dp-320-tconvdecoder-lq0-C2F-noposvalue-rope-residual-tconv-2scale2-1x-%j.log # Standard output and error log
 
 pwd; hostname; date 
