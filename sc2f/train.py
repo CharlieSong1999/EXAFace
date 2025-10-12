@@ -197,7 +197,7 @@ def train():
     if args.cuda:
         print('use cuda')
         cudnn.benchmark = True
-        device = torch.device("cuda")
+        device = torch.device("cuda:{}".format(args.rank)) if args.distributed else torch.device("cuda")
     else:
         device = torch.device("cpu")
 
