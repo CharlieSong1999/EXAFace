@@ -158,12 +158,15 @@ def init_distributed_mode(args):
     args.distributed = True
 
     torch.cuda.set_device(args.gpu)
-    args.dist_backend = 'nccl'
+    # args.dist_backend = 'nccl'
     print('| distributed init (rank {}): {}'.format(
         args.rank, args.dist_url), flush=True)
     
+    acc = torch.accelerator.current_accelerator()
+    backend = torch.distributed.get_default_backend_for_device(acc)
+    
     # os.environ['NCCL_BLOCKING_WAIT'] = '0'  # not to enforce timeout
-    torch.distributed.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
+    torch.distributed.init_process_group(backend,
                                          world_size=args.world_size, rank=args.rank,
                                          timeout=timedelta(seconds=51200000))
     torch.distributed.barrier()
