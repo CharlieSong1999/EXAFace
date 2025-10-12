@@ -30,10 +30,10 @@ srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/
         python train.py \
             --cuda -dist --num_gpu 2 \
             -d coco_fb_diff \
-            --train_img_folder /data/anu_unseen/data/amodal_train_2024_fb_v2_withSource \
-            --train_ann_file /data/anu_unseen/data/annotations/coco_amodal_fb_train_v2_withSource.json \
-            --val_img_folder /data/anu_unseen/data/amodal_val_2024_fb_v2 \
-            --val_ann_file /data/anu_unseen/data/annotations/coco_amodal_fb_val_v2_classified_rb.json \
+            --train_img_folder /home/projects/u7707452/data/coco/amodal_train_2024_fb_v2_withSource \
+            --train_ann_file /home/projects/u7707452/data/coco/annotations/coco_amodal_fb_train_v2_withSource.json \
+            --val_img_folder /home/projects/u7707452/data/coco/amodal_val_2024_fb_v2 \
+            --val_ann_file /home/projects/u7707452/data/coco/annotations/coco_amodal_fb_val_v2_classified_rb.json \
             -v yoloh_expand-50-DC5-640-expand-attn-2enc-2dec-C2F_tconv_decoder_lq0-noposvalue-rope-residual-tconv-2scale-2 \
             -lr 0.024 -lr_bk 0.004 \
             --half_precision --reduce_steps 100 --eval_epoch 8 \
