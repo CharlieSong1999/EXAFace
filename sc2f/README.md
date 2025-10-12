@@ -1,71 +1,58 @@
 # Extreme amodal face detection
 
-
-
-# Requirements
-- We recommend you to use Anaconda to create a conda environment:
-```Shell
-conda create -n yoloh python=3.6
-```
-
-- Then, activate the environment:
-```Shell
-conda activate yoloh
-```
-
-- Requirements:
-```Shell
-pip install -r requirements.txt 
-```
-
-We suggest that PyTorch should be higher than 1.9.0 and Torchvision should be higher than 0.10.3. At least, please make sure your torch is version 1.x.
-
-# Main results on COCO-val
-
-| Model                 | scale    | mAP  |
-| --------------------- | -------- | ---- |
-| YOLOH_R_50_DC5_640_1x | 640, 640 | 39.8 |
-
-Due to device reasons, larger backbones require insufficient video memory to support batchsize = 16. So the bigger backbone has not been written yet。
+Extreme amodal detection is the task of inferring the 2D location of objects that are not fully visible in the input image but are visible within an expanded field-of-view. This differs from amodal detection, where the object is partially visible within the input image, but is occluded. In this paper, we consider the sub-problem of face detection, since this class provides motivating applications involving safety and privacy, but do not tailor our method specifically to this class. Existing approaches rely on image sequences so that missing detections may be interpolated from surrounding frames or make use of generative models to sample possible completions. In contrast, we consider the single-image task and propose a more efficient, sample-free approach that makes use of the contextual cues from the image to infer the presence of unseen faces. We design a heatmap-based extreme amodal object detector that addresses the problem of efficiently predicting a lot (the out-of-frame region) from a little (the image) with a selective coarse-to-fine decoder. Our method establishes strong results for this new task, even outperforming less efficient generative approaches.
 
 # Train
 
-## Single GPU
-```Shell
-sh train.sh
+Environment setup:
+```bash
+conda create envName python==3.11
+conda activate envName
+pip install -r requirements.txt
 ```
 
-You can change the configurations of `train.sh`, according to your own situation.
-
-### or
-
-```Shell
-python train.py --cuda -d coco --root dataset/ -v yoloh50-DC5-640 -lr 0.03 -lr_bk 0.01 --batch_size 16 --train_min_size 640 --train_max_size 640 --val_min_size 640 --val_max_size 640 --schedule 1x --grad_clip_norm 4.0 
+If you use slurm, change the paths and settings accordingly and run
+```bash
+sbatch train.slurm
 ```
 
+or 
 
-
-# Test
-```Shell
-python test.py -d coco \
-               --cuda \
-               -v yoloh50 \
-               --weight path/to/weight \
-               --min_size 800 \
-               --max_size 1333 \
-               --root path/to/dataset/ \
-               --show
+```bash
+torchrun --nnodes=1 --nproc_per_node=2 --rdzv_id=100 --rdzv_backend=c10d --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT train.py \
+            --cuda -dist --num_gpu 2 \
+            -d coco_fb_diff \
+            --train_img_folder /path/to/train_folder \
+            --train_ann_file /path/to/train_ann \
+            --val_img_folder /path/to/val_folder \
+            --val_ann_file /path/to/val_ann \
+            -v yoloh_expand-50-DC5-640-expand-attn-2enc-2dec-C2F_tconv_decoder_lq0-noposvalue-rope-residual-tconv-2scale-2 \
+            -lr 0.024 -lr_bk 0.004 \
+            --half_precision --reduce_steps 100 --eval_epoch 8 \
+            --batch_size 32 --subset_ratio 1.0 \
+            --train_min_size 320 --train_max_size 320 \
+            --val_min_size 320 --val_max_size 320 \
+            --skip_attention_map --manual_max_epoch 8 \
+            --schedule 1x --grad_clip_norm 4.0 \
+            --save_folder /path/to/save_folder \
+            --wandb_token your_wandb_token_or_delete_it \
+            --exp_name delete_it_if_wandb_not_use \
+            -p /path/to/yoloh.pth
 ```
 
-# Demo
-```Shell
-python demo.py --mode image \
-               --path_to_img data/demo/images/ \
-               -v yoloh50 \
-               --cuda \
-               --weight path/to/weight \
-               --min_size 800 \
-               --max_size 1333 \
-               --show
+# Eval
+
+Change the path in `eval.sh` and run
+```bash
+sh eval.sh
 ```
+
+# Inference
+
+Coming soon...
+
+# Comparsion methods
+
+Coming soon...
+
 

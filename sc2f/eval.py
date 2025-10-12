@@ -1556,8 +1556,10 @@ def main(args):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument('--model_list_json', type=str, required=True, nargs='+',
-                    help="JSON file(s) with {'config_names': [...], 'weight_files': [...]}")
+    ap.add_argument('--model_list_json', type=str, nargs='+',
+                    help="JSON file(s) with {'config_names': [...], 'weight_files': [...]}", default=None)
+    ap.add_argument('--config_name', type=str, default=None)
+    ap.add_argument('--weight_path', type=str, default=None)
 
     ap.add_argument('--thresholds_json', type=str, required=True, help="JSON with conf_thresh,nms_thresh,topk")
     ap.add_argument('--val_img_folder', type=str, required=True)
@@ -1621,4 +1623,7 @@ if __name__ == "__main__":
                     help='Optional: limit the number of images evaluated in sanity mode.')
 
     args = ap.parse_args()
+
+    assert args.model_list_json is not None or (args.config_name is not None and args.weight_path is not None), "Either --model_list_json or both --config_name and --weight_path must be provided."
+
     main(args)
