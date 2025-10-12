@@ -17,7 +17,7 @@ srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/
      bash -lc '
         source /opt/miniconda-latest/etc/profile.d/conda.sh
         export MASTER_ADDR="localhost"
-        export MASTER_PORT=25900
+        export MASTER_PORT=23647
         export RANK=$SLURM_PROCID
         export WORLD_SIZE=$SLURM_NTASKS
         export LOCAL_RANK=$SLURM_LOCALID
