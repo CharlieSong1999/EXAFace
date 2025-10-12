@@ -23,7 +23,7 @@ class Transformer_WarmUpScheduler(_LRScheduler):
         self.num_param_groups = len(optimizer.param_groups)
         self.args = args
 
-        super().__init__(optimizer, last_epoch, verbose)
+        super().__init__(optimizer, last_epoch)
         
     def get_lr(self) -> float:
         lr = calc_lr(self._step_count, self.dim_embed, self.warmup_steps)
