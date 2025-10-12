@@ -32,7 +32,7 @@ srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/
             -v yoloh_expand-50-DC5-640-expand-attn-2enc-2dec-C2F_tconv_decoder_lq0-noposvalue-rope-residual-tconv-2scale-2 \
             -lr 0.024 -lr_bk 0.004 \
             --half_precision --reduce_steps 100 --eval_epoch 8 \
-            --batch_size 64 --subset_ratio 1.0 \
+            --batch_size 32 --subset_ratio 1.0 \
             --train_min_size 320 --train_max_size 320 \
             --val_min_size 320 --val_max_size 320 \
             --skip_attention_map --manual_max_epoch 8 \
