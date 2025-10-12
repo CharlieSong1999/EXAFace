@@ -6,7 +6,7 @@
 #SBATCH --mem=48gb # Job memory request 
 #SBATCH --time=120:00:00 # Time limit hrs:min:sec 
 #SBATCH --partition=gpu
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:4
 #SBATCH --exclude=mlcv[1-3]
 #SBATCH --output=/home/remote/u7707452/EXAFace/sc2f/slog/yoloh-attn-fine-tune-2enc-2dec-all-dp-320-tconvdecoder-lq0-C2F-noposvalue-rope-residual-tconv-2scale2-1x-%j.log # Standard output and error log
 
@@ -22,8 +22,8 @@ srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/
         cd /home/remote/u7707452/EXAFace/sc2f
         conda activate /home/projects/u7707452/test_exaface 
         echo "Rank env: SLURM_PROCID=$SLURM_PROCID SLURM_LOCALID=$SLURM_LOCALID CWD=$(pwd)"
-        torchrun --nnodes=1 --nproc_per_node=2 --rdzv_id=100 --rdzv_backend=c10d --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT train.py \
-            --cuda -dist --num_gpu 2 \
+        torchrun --nnodes=1 --nproc_per_node=4 --rdzv_id=100 --rdzv_backend=c10d --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT train.py \
+            --cuda -dist --num_gpu 4 \
             -d coco_fb_diff \
             --train_img_folder /home/projects/u7707452/data/coco/amodal_train_2024_fb_v2_withSource \
             --train_ann_file /home/projects/u7707452/data/coco/annotations/coco_amodal_fb_train_v2_withSource.json \
@@ -32,7 +32,7 @@ srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/
             -v yoloh_expand-50-DC5-640-expand-attn-2enc-2dec-C2F_tconv_decoder_lq0-noposvalue-rope-residual-tconv-2scale-2 \
             -lr 0.024 -lr_bk 0.004 \
             --half_precision --reduce_steps 100 --eval_epoch 8 \
-            --batch_size 32 --subset_ratio 1.0 \
+            --batch_size 64 --subset_ratio 1.0 \
             --train_min_size 320 --train_max_size 320 \
             --val_min_size 320 --val_max_size 320 \
             --skip_attention_map --manual_max_epoch 8 \

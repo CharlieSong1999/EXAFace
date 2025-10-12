@@ -6,7 +6,7 @@
 #SBATCH --mem=48gb # Job memory request 
 #SBATCH --time=120:00:00 # Time limit hrs:min:sec 
 #SBATCH --partition=gpu
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:4
 #SBATCH --exclude=mlcv[1-3]
 #SBATCH --output=/home/remote/u7707452/EXAFace/sc2f/slog/yoloh-attn-fine-tune-2enc-2dec-all-dp-320-tconvdecoder-lq0-C2F-noposvalue-rope-residual-tconv-2scale2-1x-%j.log # Standard output and error log
 
@@ -28,7 +28,7 @@ srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/
         conda activate /home/projects/u7707452/test_exaface 
         echo "Rank env: SLURM_PROCID=$SLURM_PROCID SLURM_LOCALID=$SLURM_LOCALID CWD=$(pwd)"
         python train.py \
-            --cuda -dist --num_gpu 2 \
+            --cuda -dist --num_gpu 4 \
             -d coco_fb_diff \
             --train_img_folder /home/projects/u7707452/data/coco/amodal_train_2024_fb_v2_withSource \
             --train_ann_file /home/projects/u7707452/data/coco/annotations/coco_amodal_fb_train_v2_withSource.json \
