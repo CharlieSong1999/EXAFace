@@ -13,6 +13,9 @@
 pwd; hostname; date 
 nvidia-smi
 echo "--- Pytorch Training ---" 
+export MASTER_ADDR="$(hostname -s)"
+export MASTER_PORT="$((10000 + SLURM_JOB_ID % 50000))"
+echo "MASTER_ADDR=$MASTER_ADDR MASTER_PORT=$MASTER_PORT"
 srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/containers/conda/conda-nvidia-22.04-latest.sif \
      bash -lc '
         source /opt/miniconda-latest/etc/profile.d/conda.sh
