@@ -1,0 +1,27 @@
+python train.py \
+--cuda \
+-dist \
+--num_gpu 4 \
+-d coco_fb_diff \
+--source_img_folder /home/projects/compVisionDatasets/coco/train2017 \
+--train_img_folder /home/projects/u7707452/data/coco/amodal_train_2024_fb_v2_withSource \
+--train_ann_file /home/projects/u7707452/data/coco/annotations/coco_amodal_fb_train_v2_withSource.json \
+--val_img_folder /home/projects/u7707452/data/coco/amodal_val_2024_fb_v2 \
+--val_ann_file /home/projects/u7707452/data/coco/annotations/coco_amodal_fb_val_v2_classified_rb.json \
+-v yoloh_expand-50-DC5-640-expand-attn-2enc-2dec-C2F_tconv_decoder_lq0-noposvalue-rope-residual-tconv-2scale-2 \
+-lr 0.024 \
+-lr_bk 0.004 \
+--half_precision \
+--reduce_steps 100 \
+--eval_epoch 4 \
+--batch_size 64 \
+--train_min_size 320 \
+--train_max_size 320 \
+--val_min_size 320 \
+--val_max_size 320 \
+--schedule 1x \
+--skip_attention_map \
+--manual_max_epoch 8 \
+--grad_clip_norm 4.0 \
+--save_folder /home/projects/u7707452/models/yoloh \
+-p /home/projects/u7707452/models/yoloh/coco_fb/yoloh50-DC5-640/yoloh50-DC5-640_epoch_14_51.35.pth
