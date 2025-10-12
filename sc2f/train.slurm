@@ -16,7 +16,7 @@ echo "--- Pytorch Training ---"
 srun --account=optimalvi+ singularity exec --nv --bind /home/projects /opt/apps/containers/conda/conda-nvidia-22.04-latest.sif \
      bash -lc '
         source /opt/miniconda-latest/etc/profile.d/conda.sh
-        export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+        export MASTER_ADDR="localhost"
         export MASTER_PORT=12345
         export RANK=$SLURM_PROCID
         export WORLD_SIZE=$SLURM_NTASKS
