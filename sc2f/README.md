@@ -49,10 +49,22 @@ sh eval.sh
 
 # Inference
 
-Coming soon...
+```bash
+python inference.py \
+  --weight_path /path/to/weight.pth \
+  --img_path /path/to/image.png \
+  --out_path ./img/infer_output.png
+```
 
-# Comparsion methods
+# Demo
 
-Coming soon...
+Install dependencies
+```bash
+pip install gradio
+pip install deepface
+```
 
-
+Start the Gradio demo:
+```bash
+python demo.py
+```
