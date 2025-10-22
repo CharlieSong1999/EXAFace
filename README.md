@@ -11,7 +11,7 @@ This repository contains the implementation of the paper "Extreme amodal face de
 <p align="center">
   <a href="https://charliesong1999.github.io/exaft_web/">🌐Project Page</a> |
   <a href="https://arxiv.org/abs/2510.06791">📜Arxiv</a> |
-  <a href="ttps://drive.google.com/drive/folders/1FM-YG7vuBazMkVu-3es4PPXXuxigHiuF?dmr=1&ec=wgc-drive-hero-gotof">🗄️Data</a>
+  <a href="https://drive.google.com/drive/folders/1FM-YG7vuBazMkVu-3es4PPXXuxigHiuF?dmr=1&ec=wgc-drive-hero-gotof">🗄️Data</a>
   <!-- <a href="https://drive.google.com/file/d/1IkEBWcd2Fui2WHcckap4QFPcCI0gkHBh/view">📹Video</a> |
   <a href="https://huggingface.co/spaces/TencentARC/BrushNet">🤗Hugging Face Demo</a> | -->
 </p>
